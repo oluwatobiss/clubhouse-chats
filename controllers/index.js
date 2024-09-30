@@ -18,10 +18,20 @@ function loginUser(req, res) {
   console.log(req.body);
 }
 
+function showPostForm(req, res) {
+  res.render("post-form", { title: "Clubhouse Posts" });
+}
+
+function savePost(req, res) {
+  console.log(req.body);
+}
+
 module.exports = {
   showPosts,
   showSignUpForm,
   signUpUser,
   showLoginForm,
   loginUser,
+  showPostForm,
+  savePost,
 };
