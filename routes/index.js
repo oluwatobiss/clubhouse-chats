@@ -6,5 +6,7 @@ const router = Router();
 router.get("/", controller.showPosts);
 router.get("/sign-up", controller.showSignUpForm);
 router.post("/sign-up", controller.signUpUser);
+router.get("/log-in", controller.showLoginForm);
+router.post("/log-in", controller.loginUser);
 
 module.exports = router;

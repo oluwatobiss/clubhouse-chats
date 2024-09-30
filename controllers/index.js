@@ -10,4 +10,18 @@ function signUpUser(req, res) {
   console.log(req.body);
 }
 
-module.exports = { showPosts, showSignUpForm, signUpUser };
+function showLoginForm(req, res) {
+  res.render("log-in-form", { title: "Clubhouse Posts" });
+}
+
+function loginUser(req, res) {
+  console.log(req.body);
+}
+
+module.exports = {
+  showPosts,
+  showSignUpForm,
+  signUpUser,
+  showLoginForm,
+  loginUser,
+};
