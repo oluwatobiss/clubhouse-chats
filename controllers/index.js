@@ -26,6 +26,14 @@ function savePost(req, res) {
   console.log(req.body);
 }
 
+function showClubForm(req, res) {
+  res.render("club-form", { title: "Clubhouse Posts" });
+}
+
+function upgradeUser(req, res) {
+  console.log(req.body);
+}
+
 module.exports = {
   showPosts,
   showSignUpForm,
@@ -34,4 +42,6 @@ module.exports = {
   loginUser,
   showPostForm,
   savePost,
+  showClubForm,
+  upgradeUser,
 };

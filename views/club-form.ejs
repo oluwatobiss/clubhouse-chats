@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+</head>
+
+<body>
+  <form action="/join-club" method="post">
+    <label for="username">Username</label>
+    <input type="text" name="username" id="username" required>
+    <div>Role</div>
+    <label for="member">Member</label>
+    <input type="radio" name="role" id="member" value="member" required>
+    <label for="admin">Admin</label>
+    <input type="radio" name="role" id="admin" value="admin" required>
+    <button type="submit">Join</button>
+  </form>
+</body>
+
+</html>

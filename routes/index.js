@@ -10,5 +10,7 @@ router.get("/log-in", controller.showLoginForm);
 router.post("/log-in", controller.loginUser);
 router.get("/new-post", controller.showPostForm);
 router.post("/new-post", controller.savePost);
+router.get("/join-club", controller.showClubForm);
+router.post("/join-club", controller.upgradeUser);
 
 module.exports = router;
