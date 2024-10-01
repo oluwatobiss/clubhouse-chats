@@ -1,4 +1,4 @@
-const schema = `
+const createTables = `
 CREATE TABLE IF NOT EXISTS statuses (
   id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
   name VARCHAR ( 255 )
@@ -28,4 +28,4 @@ CREATE TABLE IF NOT EXISTS user_message (
 );
 `;
 
-module.exports = schema;
+module.exports = createTables;

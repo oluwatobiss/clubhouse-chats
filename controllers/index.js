@@ -1,3 +1,9 @@
+const { Pool } = require("pg");
+const bcrypt = require("bcryptjs");
+const createTables = require("../models/schema");
+
+const pool = new Pool({ connectionString: process.env.DB_URI });
+
 function showPosts(req, res) {
   res.render("index", { title: "Clubhouse Posts" });
 }
@@ -7,7 +13,20 @@ function showSignUpForm(req, res) {
 }
 
 function signUpUser(req, res) {
-  console.log(req.body);
+  const form = req.body;
+  bcrypt.hash(form.password, 10, async (err, hashedPassword) => {
+    if (err) return next(err);
+    try {
+      await pool.query(createTables);
+      await pool.query(
+        "INSERT INTO users (username, first_name, last_name, password) VALUES ($1, $2, $3, $4)",
+        [form.username, form.firstName, form.lastName, hashedPassword]
+      );
+      res.redirect("/log-in");
+    } catch (err) {
+      return next(err);
+    }
+  });
 }
 
 function showLoginForm(req, res) {
