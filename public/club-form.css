@@ -1,0 +1,11 @@
+input[type="radio"] {
+  width: initial;
+}
+
+.role-label {
+  font-size: 0.9rem;
+}
+
+.passcode-label {
+  display: block;
+}
