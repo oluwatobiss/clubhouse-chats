@@ -4,7 +4,14 @@ const createTables = require("../models/schema");
 
 const pool = new Pool({ connectionString: process.env.DB_URI });
 
-function showPosts(req, res) {
+async function showPosts(req, res) {
+  await pool.query(createTables);
+  const statusTypes = (await pool.query("SELECT * FROM statuses")).rows;
+  if (!statusTypes.length) {
+    await pool.query(
+      "INSERT INTO statuses (name) VALUES ('author'), ('member'), ('admin')"
+    );
+  }
   res.render("index", { title: "Clubhouse Posts" });
 }
 
@@ -17,7 +24,6 @@ function signUpUser(req, res) {
   bcrypt.hash(form.password, 10, async (err, hashedPassword) => {
     if (err) return next(err);
     try {
-      await pool.query(createTables);
       await pool.query(
         "INSERT INTO users (username, first_name, last_name, password) VALUES ($1, $2, $3, $4)",
         [form.username, form.firstName, form.lastName, hashedPassword]
