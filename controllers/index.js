@@ -19,14 +19,20 @@ function showSignUpForm(req, res) {
   res.render("sign-up-form", { title: "Clubhouse Posts" });
 }
 
-function signUpUser(req, res) {
+function signUpUser(req, res, next) {
   const form = req.body;
   bcrypt.hash(form.password, 10, async (err, hashedPassword) => {
     if (err) return next(err);
     try {
-      await pool.query(
-        "INSERT INTO users (username, first_name, last_name, password) VALUES ($1, $2, $3, $4)",
+      const userId = await pool.query(
+        "INSERT INTO users (username, first_name, last_name, password) VALUES ($1, $2, $3, $4) RETURNING id",
         [form.username, form.firstName, form.lastName, hashedPassword]
+      );
+      const authorStatusId = await pool.query(
+        "SELECT id FROM statuses WHERE name='author'"
+      );
+      await pool.query(
+        `INSERT INTO user_status (user_id, status_id) VALUES (${userId.rows[0].id}, ${authorStatusId.rows[0].id})`
       );
       res.redirect("/log-in");
     } catch (err) {
