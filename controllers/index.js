@@ -1,17 +1,13 @@
 const { Pool } = require("pg");
 const bcrypt = require("bcryptjs");
-const createTables = require("../models/schema");
+const db = require("../models/queries");
 
 const pool = new Pool({ connectionString: process.env.DB_URI });
 
 async function showPosts(req, res) {
-  await pool.query(createTables);
-  const statusTypes = (await pool.query("SELECT * FROM statuses")).rows;
-  if (!statusTypes.length) {
-    await pool.query(
-      "INSERT INTO statuses (name) VALUES ('author'), ('member'), ('admin')"
-    );
-  }
+  await db.createTables();
+  const statusTypes = (await db.getAllStatusTypes()).rows;
+  !statusTypes.length && (await db.addStatusTypes());
   res.render("index", { title: "Clubhouse Posts" });
 }
 
@@ -24,16 +20,16 @@ function signUpUser(req, res, next) {
   bcrypt.hash(form.password, 10, async (err, hashedPassword) => {
     if (err) return next(err);
     try {
-      const userId = await pool.query(
-        "INSERT INTO users (username, first_name, last_name, password) VALUES ($1, $2, $3, $4) RETURNING id",
-        [form.username, form.firstName, form.lastName, hashedPassword]
-      );
-      const authorStatusId = await pool.query(
-        "SELECT id FROM statuses WHERE name='author'"
-      );
-      await pool.query(
-        `INSERT INTO user_status (user_id, status_id) VALUES (${userId.rows[0].id}, ${authorStatusId.rows[0].id})`
-      );
+      const userId = (
+        await db.addUserData(
+          form.username,
+          form.firstName,
+          form.lastName,
+          hashedPassword
+        )
+      ).rows[0].id;
+      const authorStatusId = (await db.getAuthorStatusId()).rows[0].id;
+      await db.assignUserAnAuthorStatus(userId, authorStatusId);
       res.redirect("/log-in");
     } catch (err) {
       return next(err);
