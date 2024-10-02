@@ -30,22 +30,17 @@ nav a {
   border-radius: 25px;
 }
 
-#log-in-btn,
-#join-club-btn {
+.log-in-btn,
+.join-club-btn {
   border: 1px solid #42bb67;
   color: #42bb67;
 }
 
-#sign-up-btn,
-#new-post-btn {
+.sign-up-btn,
+.new-post-btn {
   border: 1px solid #42bb67;
   background-color: #42bb67;
   color: #333;
-}
-
-#join-club-btn,
-#new-post-btn {
-  display: none;
 }
 
 .post-card {

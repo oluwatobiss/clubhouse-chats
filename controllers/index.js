@@ -1,21 +1,18 @@
-const { Pool } = require("pg");
 const bcrypt = require("bcryptjs");
 const db = require("../models/queries");
 
-const pool = new Pool({ connectionString: process.env.DB_URI });
-
-async function showPosts(req, res) {
+async function showHomepage(req, res) {
   await db.createTables();
   const statusTypes = (await db.getAllStatusTypes()).rows;
   !statusTypes.length && (await db.addStatusTypes());
-  res.render("index", { title: "Clubhouse Posts" });
+  res.render("index", { title: "Clubhouse Posts", status: req.user?.status });
 }
 
-function showSignUpForm(req, res) {
-  res.render("sign-up-form", { title: "Clubhouse Posts" });
+function showSignUpView(req, res) {
+  res.render("sign-up", { title: "Clubhouse Posts" });
 }
 
-function signUpUser(req, res, next) {
+async function signUpUser(req, res, next) {
   const form = req.body;
   bcrypt.hash(form.password, 10, async (err, hashedPassword) => {
     if (err) return next(err);
@@ -37,24 +34,20 @@ function signUpUser(req, res, next) {
   });
 }
 
-function showLoginForm(req, res) {
-  res.render("log-in-form", { title: "Clubhouse Posts" });
+function showLoginView(req, res) {
+  res.render("log-in", { title: "Clubhouse Posts" });
 }
 
-function loginUser(req, res) {
-  console.log(req.body);
-}
-
-function showPostForm(req, res) {
-  res.render("post-form", { title: "Clubhouse Posts" });
+function showNewPostView(req, res) {
+  res.render("new-post", { title: "Clubhouse Posts" });
 }
 
 function savePost(req, res) {
   console.log(req.body);
 }
 
-function showClubForm(req, res) {
-  res.render("club-form", { title: "Clubhouse Posts" });
+function showClubSignUpView(req, res) {
+  res.render("club-sign-up", { title: "Clubhouse Posts" });
 }
 
 function upgradeUser(req, res) {
@@ -62,13 +55,12 @@ function upgradeUser(req, res) {
 }
 
 module.exports = {
-  showPosts,
-  showSignUpForm,
+  showHomepage,
+  showSignUpView,
   signUpUser,
-  showLoginForm,
-  loginUser,
-  showPostForm,
+  showLoginView,
+  showNewPostView,
   savePost,
-  showClubForm,
+  showClubSignUpView,
   upgradeUser,
 };

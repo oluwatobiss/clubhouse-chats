@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const session = require("express-session");
+const passport = require("passport");
 const path = require("node:path");
 const indexRouter = require("./routes/index");
 
@@ -17,7 +18,7 @@ app.use(
     saveUninitialized: false,
   })
 );
+app.use(passport.session());
 
 app.use("/", indexRouter);
-
 app.listen(port, () => console.log(`Server listening on port ${port}!`));
