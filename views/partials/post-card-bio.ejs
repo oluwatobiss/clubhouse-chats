@@ -2,4 +2,5 @@
   <span><strong><%= post.first_name %> <%= post.last_name %></strong></span>
   <span><%= post.status %></span>
   <span class="bio__time"><%= post.time.toLocaleDateString() %></span>
+  <%- status === 'admin' ? include("delete-btn", {postId: post.post_id}) : "" %>
 </div>

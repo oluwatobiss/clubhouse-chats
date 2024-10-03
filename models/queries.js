@@ -49,13 +49,17 @@ const q = {
     await pool.query("SELECT title, text FROM posts"),
   getMessagesAndBios: async () =>
     await pool.query(
-      `SELECT first_name, last_name, status, title, text, time FROM users
+      `SELECT first_name, last_name, status, post_id, title, text, time FROM users
         JOIN user_status ON users.id=user_status.user_id
         JOIN statuses ON user_status.status_id=statuses.id 
         JOIN user_post ON users.id=user_post.user_id
         JOIN posts ON posts.id=user_post.post_id
       `
     ),
+  deletePost: async (postId) => {
+    await pool.query(`DELETE FROM posts WHERE id=${postId}`);
+    await pool.query(`DELETE FROM user_post WHERE post_id=${postId}`);
+  },
 };
 
 module.exports = q;

@@ -1,7 +1,7 @@
 const bcrypt = require("bcryptjs");
 const db = require("../models/queries");
 
-async function showHomepage(req, res) {
+async function showHomepage(req, res, next) {
   const userData = req.user;
   let posts = null;
   try {
@@ -58,7 +58,7 @@ function showNewPostView(req, res) {
   res.render("new-post", { title: "Clubhouse Posts" });
 }
 
-async function savePost(req, res) {
+async function savePost(req, res, next) {
   try {
     const form = req.body;
     const postId = (await db.addUserPost(form.title, form.text)).rows[0].id;
@@ -86,6 +86,15 @@ async function upgradeUser(req, res, next) {
   }
 }
 
+async function deletePost(req, res, next) {
+  try {
+    await db.deletePost(req.params.postId);
+    res.redirect("/");
+  } catch (err) {
+    return next(err);
+  }
+}
+
 module.exports = {
   showHomepage,
   showSignUpView,
@@ -95,4 +104,5 @@ module.exports = {
   savePost,
   showClubSignUpView,
   upgradeUser,
+  deletePost,
 };
