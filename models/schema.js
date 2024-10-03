@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS users (
   last_name VARCHAR ( 255 ),
   password VARCHAR ( 255 )
 );
-CREATE TABLE IF NOT EXISTS messages (
+CREATE TABLE IF NOT EXISTS posts (
   id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
   title VARCHAR (255),
   text TEXT,
@@ -22,10 +22,10 @@ CREATE TABLE IF NOT EXISTS user_status (
   user_id INTEGER,
   status_id INTEGER
 );
-CREATE TABLE IF NOT EXISTS user_message (
+CREATE TABLE IF NOT EXISTS user_post (
   id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
   user_id INTEGER,
-  message_id INTEGER
+  post_id INTEGER
 );
 `;
 

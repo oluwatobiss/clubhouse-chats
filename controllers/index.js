@@ -42,8 +42,15 @@ function showNewPostView(req, res) {
   res.render("new-post", { title: "Clubhouse Posts" });
 }
 
-function savePost(req, res) {
-  console.log(req.body);
+async function savePost(req, res) {
+  try {
+    const form = req.body;
+    const postId = (await db.addUserPost(form.title, form.text)).rows[0].id;
+    await db.creditPostToUser(req.user.user_id, postId);
+    res.redirect("/");
+  } catch (err) {
+    return next(err);
+  }
 }
 
 function showClubSignUpView(req, res) {
@@ -51,8 +58,8 @@ function showClubSignUpView(req, res) {
 }
 
 async function upgradeUser(req, res, next) {
-  const form = req.body;
   try {
+    const form = req.body;
     const statusData = (await db.getStatusData(form.status)).rows[0];
     const correctStatusPasscode = form.passcode === statusData.passcode;
     if (!correctStatusPasscode) return "Incorrect passcode";

@@ -36,6 +36,15 @@ const q = {
     await pool.query(
       `UPDATE user_status SET status_id=${newStatusId} WHERE user_id=${userId}`
     ),
+  addUserPost: async (title, text) =>
+    await pool.query(
+      "INSERT INTO posts (title, text, time) VALUES ($1, $2, $3) RETURNING id",
+      [title, text, new Date()]
+    ),
+  creditPostToUser: async (userId, postId) =>
+    await pool.query(
+      `INSERT INTO user_post (user_id, post_id) VALUES (${userId}, ${postId})`
+    ),
 };
 
 module.exports = q;
