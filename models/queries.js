@@ -6,7 +6,7 @@ const q = {
   createTables: async () => await pool.query(createTables),
   addStatusTypes: async () =>
     await pool.query(
-      "INSERT INTO statuses (status) VALUES ('author'), ('member'), ('admin')"
+      "INSERT INTO statuses (status, passcode) VALUES ('author', 'roh6'), ('member', 'reb6'), ('admin', 'nim5')"
     ),
   getAllStatusTypes: async () => await pool.query("SELECT * FROM statuses"),
   getAuthorStatusId: async () =>
@@ -29,6 +29,12 @@ const q = {
         JOIN statuses ON user_status.status_id=statuses.id 
         WHERE users.id=${id}
       `
+    ),
+  getStatusData: async (status) =>
+    await pool.query(`SELECT * FROM statuses WHERE status='${status}'`),
+  changeUserStatus: async (userId, newStatusId) =>
+    await pool.query(
+      `UPDATE user_status SET status_id=${newStatusId} WHERE user_id=${userId}`
     ),
 };
 

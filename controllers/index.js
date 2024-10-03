@@ -50,8 +50,19 @@ function showClubSignUpView(req, res) {
   res.render("club-sign-up", { title: "Clubhouse Posts" });
 }
 
-function upgradeUser(req, res) {
-  console.log(req.body);
+async function upgradeUser(req, res, next) {
+  const form = req.body;
+  try {
+    const userData = (await db.getUserDataByUsername(form.username)).rows[0];
+    if (!userData) return "Incorrect username";
+    const statusData = (await db.getStatusData(form.status)).rows[0];
+    const correctStatusPasscode = form.passcode === statusData.passcode;
+    if (!correctStatusPasscode) return "Incorrect passcode";
+    await db.changeUserStatus(userData.id, statusData.id);
+    res.redirect("/");
+  } catch (err) {
+    return next(err);
+  }
 }
 
 module.exports = {

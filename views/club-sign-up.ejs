@@ -16,13 +16,13 @@
     <form action="/join-club" method="post">
       <label for="username">Username</label>
       <input type="text" name="username" id="username" required>
-      <div class="role-label">Role</div>
+      <div class="status-label">Status</div>
       <label for="member">Member</label>
-      <input type="radio" name="role" id="member" value="member" required>
+      <input type="radio" name="status" id="member" value="member" required>
       <label for="admin">Admin</label>
-      <input type="radio" name="role" id="admin" value="admin" required>
-      <label for="passcode" class="passcode-label">Role passcode</label>
-      <input type="text" name="passcode" id="passcode" required>
+      <input type="radio" name="status" id="admin" value="admin" required>
+      <label for="passcode" class="passcode-label">Status passcode</label>
+      <input type="password" name="passcode" id="passcode" required>
       <div>
         <button type="submit">Join</button>
         <a href="/" class="return-home-btn">Back to home</a>
