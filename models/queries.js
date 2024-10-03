@@ -24,7 +24,7 @@ const q = {
     await pool.query("SELECT * FROM users WHERE username=$1", [username]),
   getUserDataById: async (id) =>
     await pool.query(
-      `SELECT * FROM users
+      `SELECT user_id, status FROM users
         JOIN user_status ON users.id=user_status.user_id
         JOIN statuses ON user_status.status_id=statuses.id 
         WHERE users.id=${id}

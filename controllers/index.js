@@ -53,12 +53,10 @@ function showClubSignUpView(req, res) {
 async function upgradeUser(req, res, next) {
   const form = req.body;
   try {
-    const userData = (await db.getUserDataByUsername(form.username)).rows[0];
-    if (!userData) return "Incorrect username";
     const statusData = (await db.getStatusData(form.status)).rows[0];
     const correctStatusPasscode = form.passcode === statusData.passcode;
     if (!correctStatusPasscode) return "Incorrect passcode";
-    await db.changeUserStatus(userData.id, statusData.id);
+    await db.changeUserStatus(req.user.user_id, statusData.id);
     res.redirect("/");
   } catch (err) {
     return next(err);
