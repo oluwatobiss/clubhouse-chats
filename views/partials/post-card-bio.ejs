@@ -1,6 +1,11 @@
 <div class="bio">
   <span><strong><%= post.first_name %> <%= post.last_name %></strong></span>
-  <span><%= post.status %></span>
+  <span title="<%= status[0].toUpperCase() + status.slice(1) %>">
+    <%- status === 'admin' ? include("admin-badge") : "" %>
+    <%- status === 'member' ? include("member-badge") : "" %>
+    <%- status === 'author' ? include("author-badge") : "" %>
+  </span>
+  <!-- <span><%= post.status %></span> -->
   <span class="bio__time"><%= post.time.toLocaleDateString() %></span>
   <%- status === 'admin' ? include("delete-btn", {postId: post.post_id}) : "" %>
 </div>
