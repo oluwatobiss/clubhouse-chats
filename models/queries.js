@@ -45,6 +45,17 @@ const q = {
     await pool.query(
       `INSERT INTO user_post (user_id, post_id) VALUES (${userId}, ${postId})`
     ),
+  getMessagesOnly: async () =>
+    await pool.query("SELECT title, text FROM posts"),
+  getMessagesAndBios: async () =>
+    await pool.query(
+      `SELECT first_name, last_name, status, title, text, time FROM users
+        JOIN user_status ON users.id=user_status.user_id
+        JOIN statuses ON user_status.status_id=statuses.id 
+        JOIN user_post ON users.id=user_post.user_id
+        JOIN posts ON posts.id=user_post.post_id
+      `
+    ),
 };
 
 module.exports = q;

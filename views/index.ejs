@@ -17,24 +17,13 @@
       <%- status ? '<a href="/new-post" class="new-post-btn">Create post</a>' : "" %>
     </nav>
     <article>
+      <% posts.forEach(post => { %>
       <div class="post-card">
-        <%- status === 'member' || status === 'admin' ? include("partials/post-card-bio") : "" %>
-        <div>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto distinctio mollitia totam odit sunt saepe dolore, architecto accusamus esse ab fugit. Consectetur, at expedita. Aut esse nostrum inventore vero eos.
-        </div>
+        <%- status === 'member' || status === 'admin' ? include("partials/post-card-bio", {post}) : "" %>
+        <h2><%= post.title %></h2>
+        <div><%= post.text %></div>
       </div>
-      <div class="post-card">
-        <%- status === 'member' || status === 'admin' ? include("partials/post-card-bio") : "" %>
-        <div>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto distinctio mollitia totam odit sunt saepe dolore, architecto accusamus esse ab fugit. Consectetur, at expedita. Aut esse nostrum inventore vero eos.
-        </div>
-      </div>
-      <div class="post-card">
-        <%- status === 'member' || status === 'admin' ? include("partials/post-card-bio") : "" %>
-        <div>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto distinctio mollitia totam odit sunt saepe dolore, architecto accusamus esse ab fugit. Consectetur, at expedita. Aut esse nostrum inventore vero eos.
-        </div>
-      </div>
+      <% }); %>
     </article>
   </main>
 </body>

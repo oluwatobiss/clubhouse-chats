@@ -2,10 +2,26 @@ const bcrypt = require("bcryptjs");
 const db = require("../models/queries");
 
 async function showHomepage(req, res) {
-  await db.createTables();
-  const statusTypes = (await db.getAllStatusTypes()).rows;
-  !statusTypes.length && (await db.addStatusTypes());
-  res.render("index", { title: "Clubhouse Posts", status: req.user?.status });
+  const userData = req.user;
+  let posts = null;
+  try {
+    await db.createTables();
+    const statusTypes = (await db.getAllStatusTypes()).rows;
+    !statusTypes.length && (await db.addStatusTypes());
+
+    if (!userData || userData?.status === "author")
+      posts = (await db.getMessagesOnly()).rows;
+    if (userData?.status === "member" || userData?.status === "admin")
+      posts = (await db.getMessagesAndBios()).rows;
+
+    res.render("index", {
+      title: "Clubhouse Posts",
+      status: userData?.status,
+      posts,
+    });
+  } catch (err) {
+    return next(err);
+  }
 }
 
 function showSignUpView(req, res) {
