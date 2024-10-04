@@ -1,12 +1,12 @@
 <div class="post-card__bio">
   <span>
     <span><strong><%= post.first_name %> <%= post.last_name %></strong></span>
-    <span class="bio__status" title="<%= status[0].toUpperCase() + status.slice(1) %>">
-      <%- status === 'admin' ? include("admin-badge") : "" %>
-      <%- status === 'member' ? include("member-badge") : "" %>
-      <%- status === 'author' ? include("author-badge") : "" %>
+    <span class="bio__status" title="<%= post.status[0].toUpperCase() + post.status.slice(1) %>">
+      <%- post.status === 'admin' ? include("admin-badge") : "" %>
+      <%- post.status === 'member' ? include("member-badge") : "" %>
+      <%- post.status === 'author' ? include("author-badge") : "" %>
     </span>
     <span class="bio__time"><%= post.time.toLocaleDateString() %></span>
   </span>
-  <%- status === 'admin' ? include("delete-btn", {postId: post.post_id}) : "" %>
+  <%- userStatus === 'admin' ? include("delete-btn", {postId: post.post_id}) : "" %>
 </div>

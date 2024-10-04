@@ -13,16 +13,16 @@
     <nav>
       <span class="logo">ClubHouse Chats</span>
       <span>
-        <%- !status ? '<a href="/log-in" class="log-in-btn">Log in</a>' : "" %>
-        <%- !status ? '<a href="/sign-up" class="sign-up-btn">Sign up</a>' : "" %>
-        <%- status === 'author' ? '<a href="/join-club" class="join-club-btn">Join club</a>' : "" %>
-        <%- status ? '<a href="/new-post" class="new-post-btn">Create post</a>' : "" %>
+        <%- !userStatus ? '<a href="/log-in" class="log-in-btn">Log in</a>' : "" %>
+        <%- !userStatus ? '<a href="/sign-up" class="sign-up-btn">Sign up</a>' : "" %>
+        <%- userStatus === 'author' ? '<a href="/join-club" class="join-club-btn">Join club</a>' : "" %>
+        <%- userStatus ? '<a href="/new-post" class="new-post-btn">Create post</a>' : "" %>
       </span>
     </nav>
     <article>
       <% posts.forEach(post => { %>
       <div class="post-card">
-        <%- status === 'member' || status === 'admin' ? include("partials/post-card-bio", {post}) : "" %>
+        <%- userStatus === 'member' || userStatus === 'admin' ? include("partials/post-card-bio", {post}) : "" %>
         <h2><%= post.title %></h2>
         <div><%= post.text %></div>
       </div>

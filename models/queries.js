@@ -15,7 +15,7 @@ const q = {
     await pool.query(
       `INSERT INTO user_status (user_id, status_id) VALUES (${userId}, ${authorStatusId})`
     ),
-  addUserData: async (username, firstName, lastName, hashedPassword) =>
+  addUserData: async (firstName, lastName, username, hashedPassword) =>
     await pool.query(
       "INSERT INTO users (username, first_name, last_name, password) VALUES ($1, $2, $3, $4) RETURNING id",
       [username, firstName, lastName, hashedPassword]

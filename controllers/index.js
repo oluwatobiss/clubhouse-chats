@@ -1,5 +1,7 @@
+const { validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
 const db = require("../models/queries");
+const signUpValidator = require("./validators");
 
 async function showHomepage(req, res, next) {
   const userData = req.user;
@@ -16,7 +18,7 @@ async function showHomepage(req, res, next) {
 
     res.render("index", {
       title: "Clubhouse Posts",
-      status: userData?.status,
+      userStatus: userData?.status,
       posts,
     });
   } catch (err) {
@@ -25,30 +27,48 @@ async function showHomepage(req, res, next) {
 }
 
 function showSignUpView(req, res) {
-  res.render("sign-up", { title: "Clubhouse Posts" });
-}
-
-async function signUpUser(req, res, next) {
-  const form = req.body;
-  bcrypt.hash(form.password, 10, async (err, hashedPassword) => {
-    if (err) return next(err);
-    try {
-      const userId = (
-        await db.addUserData(
-          form.username,
-          form.firstName,
-          form.lastName,
-          hashedPassword
-        )
-      ).rows[0].id;
-      const authorStatusId = (await db.getAuthorStatusId()).rows[0].id;
-      await db.assignUserAnAuthorStatus(userId, authorStatusId);
-      res.redirect("/log-in");
-    } catch (err) {
-      return next(err);
-    }
+  res.render("sign-up", {
+    title: "Clubhouse Posts",
+    errInputs: {
+      firstName: "",
+      lastName: "",
+      username: "",
+    },
   });
 }
+
+const signUpUser = [
+  signUpValidator,
+  async function (req, res, next) {
+    const { firstName, lastName, username, password } = req.body;
+    const result = validationResult(req);
+    if (!result.isEmpty()) {
+      console.log(result.array());
+      return res.status(400).render("sign-up", {
+        title: "Clubhouse Posts",
+        errors: result.array(),
+        errInputs: {
+          firstName,
+          lastName,
+          username,
+        },
+      });
+    }
+    bcrypt.hash(password, 10, async (err, hashedPassword) => {
+      if (err) return next(err);
+      try {
+        const userId = (
+          await db.addUserData(firstName, lastName, username, hashedPassword)
+        ).rows[0].id;
+        const authorStatusId = (await db.getAuthorStatusId()).rows[0].id;
+        await db.assignUserAnAuthorStatus(userId, authorStatusId);
+        res.redirect("/log-in");
+      } catch (err) {
+        return next(err);
+      }
+    });
+  },
+];
 
 function showLoginView(req, res) {
   res.render("log-in", { title: "Clubhouse Posts" });

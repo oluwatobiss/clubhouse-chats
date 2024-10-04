@@ -14,13 +14,20 @@
     <%- include("partials/nav") %>
     <article>
       <h1>Sign up</h1>
+      <% if (locals.errors) {%>
+      <ul>
+        <% errors.forEach(function(error) { %>
+        <li><%= error.msg %></li>
+        <% }) %>
+      </ul>
+      <% } %>
       <form action="/sign-up" method="post">
         <label for="firstName">First name</label>
-        <input type="text" name="firstName" id="firstName" required>
+        <input type="text" name="firstName" id="firstName" value="<%= errInputs.firstName %>" required>
         <label for="lastName">Last name</label>
-        <input type="text" name="lastName" id="lastName" required>
+        <input type="text" name="lastName" id="lastName" value="<%= errInputs.lastName %>" required>
         <label for="username">Username</label>
-        <input type="text" name="username" id="username" required>
+        <input type="text" name="username" id="username" value="<%= errInputs.username %>" required>
         <label for="password">Password</label>
         <input type="password" name="password" id="password" required>
         <label for="passwordConfirmation">Confirm password</label>
