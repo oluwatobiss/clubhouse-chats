@@ -49,5 +49,6 @@ router.post("/new-post", controller.savePost);
 router.get("/join-club", controller.showClubSignUpView);
 router.post("/join-club", controller.upgradeUser);
 router.post("/delete/:postId", controller.deletePost);
+router.get("/log-out", controller.logUserOut);
 
 module.exports = router;

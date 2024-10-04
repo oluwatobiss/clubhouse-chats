@@ -12,7 +12,13 @@
 
 <body>
   <main>
-    <%- include("partials/nav") %>
+    <nav>
+      <div class="logo">ClubHouse Chats</div>
+      <div class="nav-btns-container">
+        <%- userStatus ? '<a href="/log-out" class="log-out-btn">Log out</a>' : "" %>
+        <a href="/" class="return-home-btn">Back to home</a>
+      </div>
+    </nav>
     <article>
       <h1>Join the club</h1>
       <form action="/join-club" method="post">

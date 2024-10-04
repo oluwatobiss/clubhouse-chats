@@ -11,13 +11,14 @@
 <body>
   <main>
     <nav>
-      <span class="logo">ClubHouse Chats</span>
-      <span>
+      <div class="logo">ClubHouse Chats</div>
+      <div class="nav-btns-container">
         <%- !userStatus ? '<a href="/log-in" class="log-in-btn">Log in</a>' : "" %>
         <%- !userStatus ? '<a href="/sign-up" class="sign-up-btn">Sign up</a>' : "" %>
+        <%- userStatus ? '<a href="/log-out" class="log-out-btn">Log out</a>' : "" %>
         <%- userStatus === 'author' ? '<a href="/join-club" class="join-club-btn">Join club</a>' : "" %>
         <%- userStatus ? '<a href="/new-post" class="new-post-btn">Create post</a>' : "" %>
-      </span>
+      </div>
     </nav>
     <article>
       <% posts.forEach(post => { %>

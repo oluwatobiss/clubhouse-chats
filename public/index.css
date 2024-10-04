@@ -21,24 +21,36 @@ main {
 nav {
   position: sticky;
   top: 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 29px 31px;
+  padding-block: 13px 33px;
+  padding-inline: 31px;
   border-inline: 1px solid rgb(113, 118, 123);
   border-bottom: 1px solid rgb(113, 118, 123);
   background-color: rgba(23, 24, 28, 0.8);
   backdrop-filter: blur(7px);
-  text-align: right;
+  text-align: center;
   user-select: none;
 }
 
+.registration-pages-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 29px 31px;
+}
+
 .logo {
+  margin-bottom: 7px;
   font-family: "Edu AU VIC WA NT Dots", cursive;
   font-optical-sizing: auto;
   font-weight: 700;
   font-style: normal;
   font-size: 2rem;
+}
+
+.nav-btns-container {
+  display: flex;
+  justify-content: center;
+  gap: 7px;
 }
 
 nav a {
@@ -50,6 +62,7 @@ nav a {
 }
 
 .log-in-btn,
+.log-out-btn,
 .join-club-btn {
   border: 1px solid #42bb67;
   color: #42bb67;

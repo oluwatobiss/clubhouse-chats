@@ -75,7 +75,11 @@ function showLoginView(req, res) {
 }
 
 function showNewPostView(req, res) {
-  res.render("new-post", { title: "Clubhouse Posts" });
+  const userData = req.user;
+  res.render("new-post", {
+    title: "Clubhouse Posts",
+    userStatus: userData?.status,
+  });
 }
 
 async function savePost(req, res, next) {
@@ -90,7 +94,11 @@ async function savePost(req, res, next) {
 }
 
 function showClubSignUpView(req, res) {
-  res.render("club-sign-up", { title: "Clubhouse Posts" });
+  const userData = req.user;
+  res.render("club-sign-up", {
+    title: "Clubhouse Posts",
+    userStatus: userData?.status,
+  });
 }
 
 async function upgradeUser(req, res, next) {
@@ -115,6 +123,13 @@ async function deletePost(req, res, next) {
   }
 }
 
+function logUserOut(req, res, next) {
+  req.logout((err) => {
+    if (err) return next(err);
+    res.redirect("/");
+  });
+}
+
 module.exports = {
   showHomepage,
   showSignUpView,
@@ -125,4 +140,5 @@ module.exports = {
   showClubSignUpView,
   upgradeUser,
   deletePost,
+  logUserOut,
 };

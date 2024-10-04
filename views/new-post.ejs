@@ -11,7 +11,14 @@
 
 <body>
   <main>
-    <%- include("partials/nav") %>
+    <nav>
+      <div class="logo">ClubHouse Chats</div>
+      <div class="nav-btns-container">
+        <%- userStatus ? '<a href="/log-out" class="log-out-btn">Log out</a>' : "" %>
+        <%- userStatus === 'author' ? '<a href="/join-club" class="join-club-btn">Join club</a>' : "" %>
+        <a href="/" class="return-home-btn">Back to home</a>
+      </div>
+    </nav>
     <article>
       <h1>Create new post</h1>
       <form action="/new-post" method="post">
