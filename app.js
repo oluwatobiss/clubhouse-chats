@@ -28,7 +28,7 @@ app.use("/", indexRouter);
 app.use((err, req, res, next) => {
   const userData = req.user;
   err &&
-    res.render("error", {
+    res.status(400).render("error", {
       userStatus: userData?.status,
       error: `${err.message}`,
     });
