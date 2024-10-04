@@ -21,6 +21,11 @@
     </nav>
     <article>
       <h1>Join the club</h1>
+      <% if (locals.error) {%>
+      <ul class="error-list">
+        <li><%= error %></li>
+      </ul>
+      <% } %>
       <form action="/join-club" method="post">
         <div class="status-label">Select a status</div>
         <label for="member">Member</label>

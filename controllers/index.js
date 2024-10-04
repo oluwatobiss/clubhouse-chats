@@ -100,7 +100,12 @@ async function upgradeUser(req, res, next) {
     const form = req.body;
     const statusData = (await db.getStatusData(form.status)).rows[0];
     const correctStatusPasscode = form.passcode === statusData.passcode;
-    if (!correctStatusPasscode) return "Incorrect passcode";
+    if (!correctStatusPasscode) {
+      return res.status(400).render("club-sign-up", {
+        userStatus: req.user?.status,
+        error: "Incorrect passcode",
+      });
+    }
     await db.changeUserStatus(req.user.user_id, statusData.id);
     res.redirect("/");
   } catch (err) {

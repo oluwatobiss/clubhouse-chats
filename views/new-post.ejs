@@ -22,7 +22,7 @@
     <article>
       <h1>Create new post</h1>
       <% if (locals.errors) {%>
-      <ul>
+      <ul class="error-list">
         <% errors.forEach(function(error) { %>
         <li><%= error.msg %></li>
         <% }) %>

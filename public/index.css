@@ -110,3 +110,7 @@ nav a {
 .bio__time {
   color: rgb(113, 118, 123);
 }
+
+.error-list {
+  color: #e25851;
+}
