@@ -6,13 +6,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/form.css" />
   <link rel="stylesheet" href="/index.css" />
-  <title><%= title %></title>
+  <title><%= siteTitle %></title>
 </head>
 
 <body>
   <main>
     <nav>
-      <div class="logo">ClubHouse Chats</div>
+      <div class="logo"><%= siteTitle %></div>
       <div class="nav-btns-container">
         <%- userStatus ? '<a href="/log-out" class="log-out-btn">Log out</a>' : "" %>
         <%- userStatus === 'author' ? '<a href="/join-club" class="join-club-btn">Join club</a>' : "" %>

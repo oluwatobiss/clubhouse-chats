@@ -7,13 +7,13 @@
   <link rel="stylesheet" href="/index.css" />
   <link rel="stylesheet" href="/form.css" />
   <link rel="stylesheet" href="/club-form.css" />
-  <title><%= title %></title>
+  <title><%= siteTitle %></title>
 </head>
 
 <body>
   <main>
     <nav>
-      <div class="logo">ClubHouse Chats</div>
+      <div class="logo"><%= siteTitle %></div>
       <div class="nav-btns-container">
         <%- userStatus ? '<a href="/log-out" class="log-out-btn">Log out</a>' : "" %>
         <a href="/" class="return-home-btn">Back to home</a>

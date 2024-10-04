@@ -19,6 +19,10 @@ app.use(
   })
 );
 app.use(passport.session());
+app.use((req, res, next) => {
+  res.locals.siteTitle = "Clubhouse Chats";
+  next();
+});
 
 app.use("/", indexRouter);
 app.listen(port, () => console.log(`Server listening on port ${port}!`));

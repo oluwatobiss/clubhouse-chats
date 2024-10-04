@@ -16,11 +16,7 @@ async function showHomepage(req, res, next) {
     if (userData?.status === "member" || userData?.status === "admin")
       posts = (await db.getMessagesAndBios()).rows;
 
-    res.render("index", {
-      title: "Clubhouse Posts",
-      userStatus: userData?.status,
-      posts,
-    });
+    res.render("index", { userStatus: userData?.status, posts });
   } catch (err) {
     return next(err);
   }
@@ -28,7 +24,6 @@ async function showHomepage(req, res, next) {
 
 function showSignUpView(req, res) {
   res.render("sign-up", {
-    title: "Clubhouse Posts",
     errInputs: { firstName: "", lastName: "", username: "" },
   });
 }
@@ -40,7 +35,6 @@ const signUpUser = [
     const result = validationResult(req);
     if (!result.isEmpty()) {
       return res.status(400).render("sign-up", {
-        title: "Clubhouse Posts",
         errors: result.array(),
         errInputs: { firstName, lastName, username },
       });
@@ -62,13 +56,12 @@ const signUpUser = [
 ];
 
 function showLoginView(req, res) {
-  res.render("log-in", { title: "Clubhouse Posts" });
+  res.render("log-in");
 }
 
 function showNewPostView(req, res) {
   const userData = req.user;
   res.render("new-post", {
-    title: "Clubhouse Posts",
     userStatus: userData?.status,
     errInputs: { title: "", text: "" },
   });
@@ -82,7 +75,6 @@ const savePost = [
     const result = validationResult(req);
     if (!result.isEmpty()) {
       return res.status(400).render("new-post", {
-        title: "Clubhouse Posts",
         userStatus: userData?.status,
         errors: result.array(),
         errInputs: { title, text },
@@ -100,10 +92,7 @@ const savePost = [
 
 function showClubSignUpView(req, res) {
   const userData = req.user;
-  res.render("club-sign-up", {
-    title: "Clubhouse Posts",
-    userStatus: userData?.status,
-  });
+  res.render("club-sign-up", { userStatus: userData?.status });
 }
 
 async function upgradeUser(req, res, next) {
