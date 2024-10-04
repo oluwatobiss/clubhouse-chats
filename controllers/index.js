@@ -1,7 +1,7 @@
 const { validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
 const db = require("../models/queries");
-const signUpValidator = require("./validators");
+const validate = require("./validators");
 
 async function showHomepage(req, res, next) {
   const userData = req.user;
@@ -29,29 +29,20 @@ async function showHomepage(req, res, next) {
 function showSignUpView(req, res) {
   res.render("sign-up", {
     title: "Clubhouse Posts",
-    errInputs: {
-      firstName: "",
-      lastName: "",
-      username: "",
-    },
+    errInputs: { firstName: "", lastName: "", username: "" },
   });
 }
 
 const signUpUser = [
-  signUpValidator,
-  async function (req, res, next) {
+  validate.signUp,
+  async (req, res, next) => {
     const { firstName, lastName, username, password } = req.body;
     const result = validationResult(req);
     if (!result.isEmpty()) {
-      console.log(result.array());
       return res.status(400).render("sign-up", {
         title: "Clubhouse Posts",
         errors: result.array(),
-        errInputs: {
-          firstName,
-          lastName,
-          username,
-        },
+        errInputs: { firstName, lastName, username },
       });
     }
     bcrypt.hash(password, 10, async (err, hashedPassword) => {
@@ -79,19 +70,33 @@ function showNewPostView(req, res) {
   res.render("new-post", {
     title: "Clubhouse Posts",
     userStatus: userData?.status,
+    errInputs: { title: "", text: "" },
   });
 }
 
-async function savePost(req, res, next) {
-  try {
-    const form = req.body;
-    const postId = (await db.addUserPost(form.title, form.text)).rows[0].id;
-    await db.creditPostToUser(req.user.user_id, postId);
-    res.redirect("/");
-  } catch (err) {
-    return next(err);
-  }
-}
+const savePost = [
+  validate.newPost,
+  async (req, res, next) => {
+    const userData = req.user;
+    const { title, text } = req.body;
+    const result = validationResult(req);
+    if (!result.isEmpty()) {
+      return res.status(400).render("new-post", {
+        title: "Clubhouse Posts",
+        userStatus: userData?.status,
+        errors: result.array(),
+        errInputs: { title, text },
+      });
+    }
+    try {
+      const postId = (await db.addUserPost(title, text)).rows[0].id;
+      await db.creditPostToUser(req.user.user_id, postId);
+      res.redirect("/");
+    } catch (err) {
+      return next(err);
+    }
+  },
+];
 
 function showClubSignUpView(req, res) {
   const userData = req.user;
