@@ -20,7 +20,7 @@ app.use(
 );
 app.use(passport.session());
 app.use((req, res, next) => {
-  res.locals.siteTitle = "Clubhouse Chats";
+  res.locals.appName = "Clubhouse Chats";
   next();
 });
 

@@ -5,13 +5,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/index.css" />
-  <title><%= siteTitle %></title>
+  <title><%= appName %></title>
 </head>
 
 <body>
   <main>
     <nav>
-      <div class="logo"><%= siteTitle %></div>
+      <div class="logo"><%= appName %></div>
       <div class="nav-btns-container">
         <%- !userStatus ? '<a href="/log-in" class="log-in-btn">Log in</a>' : "" %>
         <%- !userStatus ? '<a href="/sign-up" class="sign-up-btn">Sign up</a>' : "" %>
