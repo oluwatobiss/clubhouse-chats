@@ -19,12 +19,18 @@ main {
 }
 
 nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid rgb(113, 118, 123);
   padding: 29px 31px;
+  border-bottom: 1px solid rgb(113, 118, 123);
+  background-color: rgba(23, 24, 28, 0.8);
+  backdrop-filter: blur(7px);
   text-align: right;
+  user-select: none;
 }
 
 .logo {
