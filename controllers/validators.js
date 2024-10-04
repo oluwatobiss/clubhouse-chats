@@ -26,6 +26,10 @@ const signUp = [
     .trim()
     .isLength({ min: 3, max: 70 })
     .withMessage(`Password ${lengthErr(3, 70)}.`),
+  body("passwordConfirmation")
+    .trim()
+    .custom((value, { req }) => value === req.body.password)
+    .withMessage(`Passwords do not match.`),
 ];
 
 const newPost = [
