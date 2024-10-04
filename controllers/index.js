@@ -56,7 +56,7 @@ const signUpUser = [
 ];
 
 function showLoginView(req, res) {
-  res.render("log-in");
+  res.render("log-in", { errMsg: req.session.messages });
 }
 
 function showNewPostView(req, res) {

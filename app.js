@@ -25,4 +25,13 @@ app.use((req, res, next) => {
 });
 
 app.use("/", indexRouter);
+app.use((err, req, res, next) => {
+  const userData = req.user;
+  err &&
+    res.render("error", {
+      userStatus: userData?.status,
+      error: `${err.message}`,
+    });
+});
+
 app.listen(port, () => console.log(`Server listening on port ${port}!`));

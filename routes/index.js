@@ -8,18 +8,23 @@ const db = require("../models/queries");
 const router = Router();
 
 passport.use(
-  new LocalStrategy(async (username, password, done) => {
-    try {
-      const userData = (await db.getUserDataByUsername(username)).rows[0];
-      const match = await bcrypt.compare(password, userData.password);
-      if (!userData)
-        return done(null, false, { message: "Incorrect username" });
-      if (!match) return done(null, false, { message: "Incorrect password" });
-      return done(null, userData);
-    } catch (err) {
-      return done(err);
+  new LocalStrategy(
+    { passReqToCallback: true },
+    async (req, username, password, done) => {
+      // Empty the error messages field before validating
+      req.session.messages && (req.session.messages = null);
+      try {
+        const userData = (await db.getUserDataByUsername(username)).rows[0];
+        if (!userData)
+          return done(null, false, { message: "Incorrect username" });
+        const match = await bcrypt.compare(password, userData.password);
+        if (!match) return done(null, false, { message: "Incorrect password" });
+        return done(null, userData);
+      } catch (err) {
+        return done(err);
+      }
     }
-  })
+  )
 );
 passport.serializeUser((userData, done) => {
   done(null, userData.id);
@@ -42,6 +47,7 @@ router.post(
   passport.authenticate("local", {
     successRedirect: "/",
     failureRedirect: "/log-in",
+    failureMessage: true,
   })
 );
 router.get("/new-post", controller.showNewPostView);
