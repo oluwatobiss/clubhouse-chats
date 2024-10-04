@@ -11,15 +11,20 @@
 
 <body>
   <main>
-    <h1>Create new post</h1>
-    <form action="/new-post" method="post">
-      <label for="title">Title</label>
-      <input type="text" name="title" id="title" required>
-      <label for="text">Write a post</label>
-      <textarea name="text" id="text" placeholder="What is good?!" required></textarea>
-      <button type="submit">Post</button>
+    <nav>
+      <span class="logo">ClubHouse Chats</span>
       <a href="/" class="return-home-btn">Back to home</a>
-    </form>
+    </nav>
+    <article>
+      <h1>Create new post</h1>
+      <form action="/new-post" method="post">
+        <label for="title">Title</label>
+        <input type="text" name="title" id="title" required>
+        <label for="text">Write a post</label>
+        <textarea name="text" id="text" placeholder="What is good?!" required></textarea>
+        <button type="submit">Post</button>
+      </form>
+    </article>
   </main>
 </body>
 

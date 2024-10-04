@@ -12,20 +12,23 @@
 
 <body>
   <main>
-    <h1>Join the club</h1>
-    <form action="/join-club" method="post">
-      <div class="status-label">Select a status</div>
-      <label for="member">Member</label>
-      <input type="radio" name="status" id="member" value="member" required>
-      <label for="admin">Admin</label>
-      <input type="radio" name="status" id="admin" value="admin" required>
-      <label for="passcode" class="passcode-label">Enter the status' passcode</label>
-      <input type="password" name="passcode" id="passcode" required>
-      <div>
+    <nav>
+      <span class="logo">ClubHouse Chats</span>
+      <a href="/" class="return-home-btn">Back to home</a>
+    </nav>
+    <article>
+      <h1>Join the club</h1>
+      <form action="/join-club" method="post">
+        <div class="status-label">Select a status</div>
+        <label for="member">Member</label>
+        <input type="radio" name="status" id="member" value="member" required>
+        <label for="admin">Admin</label>
+        <input type="radio" name="status" id="admin" value="admin" required>
+        <label for="passcode" class="passcode-label">Enter the status' passcode</label>
+        <input type="password" name="passcode" id="passcode" required>
         <button type="submit">Join</button>
-        <a href="/" class="return-home-btn">Back to home</a>
-      </div>
-    </form>
+      </form>
+    </article>
   </main>
 </body>
 

@@ -10,11 +10,14 @@
 
 <body>
   <main>
-    <nav class="auth-btns-container">
-      <%- !status ? '<a href="/log-in" class="log-in-btn">Log in</a>' : "" %>
-      <%- !status ? '<a href="/sign-up" class="sign-up-btn">Sign up</a>' : "" %>
-      <%- status === 'author' ? '<a href="/join-club" class="join-club-btn">Join club</a>' : "" %>
-      <%- status ? '<a href="/new-post" class="new-post-btn">Create post</a>' : "" %>
+    <nav>
+      <span class="logo">ClubHouse Chats</span>
+      <span>
+        <%- !status ? '<a href="/log-in" class="log-in-btn">Log in</a>' : "" %>
+        <%- !status ? '<a href="/sign-up" class="sign-up-btn">Sign up</a>' : "" %>
+        <%- status === 'author' ? '<a href="/join-club" class="join-club-btn">Join club</a>' : "" %>
+        <%- status ? '<a href="/new-post" class="new-post-btn">Create post</a>' : "" %>
+      </span>
     </nav>
     <article>
       <% posts.forEach(post => { %>
