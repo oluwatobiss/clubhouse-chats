@@ -22,3 +22,5 @@ An app where your chats are anonymous to non-club members. Only verified members
 - PostgreSQL database hosting
 
 ## Live demo
+
+- https://clubhouse-chats-production.up.railway.app/
