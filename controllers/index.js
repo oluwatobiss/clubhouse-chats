@@ -45,9 +45,13 @@ const signUpUser = [
         const userId = (
           await db.addUserData(firstName, lastName, username, hashedPassword)
         ).rows[0].id;
+        const user = { id: userId };
         const authorStatusId = (await db.getAuthorStatusId()).rows[0].id;
         await db.assignUserAnAuthorStatus(userId, authorStatusId);
-        res.redirect("/log-in");
+        req.login(user, function (err) {
+          if (err) return next(err);
+          return res.redirect("/");
+        });
       } catch (err) {
         return next(err);
       }
